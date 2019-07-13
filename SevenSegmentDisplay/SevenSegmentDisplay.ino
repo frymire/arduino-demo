@@ -17,7 +17,7 @@ boolean displayUpdatePending = false;
 void setup() {
   tm1637.set();
   tm1637.init();
-  tm1637.point(HIGH); // Set whether to display the middle colon.
+  tm1637.point(showColon); // Set whether to display the middle colon.
   Timer1.initialize(500000); //timing for 500ms
   Timer1.attachInterrupt(updateTime);  
 }
