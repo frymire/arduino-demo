@@ -1,5 +1,5 @@
 /*
- * Velleman VMA 437 OLED Hello World
+ * Velleman VMA 437 OLED Hello World.
  * 
  * Gnd -> Gnd
  * Vcc -> 5V 
@@ -18,43 +18,31 @@ const int csPin = 6;
 const int dcPin = 7;
 U8GLIB_SH1106_128X64 u8g(clkPin, mosiPin, csPin, dcPin);
 
-void draw(void) {
-  // graphic commands to redraw the complete screen should be placed here  
-  u8g.setFont(u8g_font_unifont);
-  //u8g.setFont(u8g_font_osb21);
-  u8g.drawStr(0, 22, "Hello World!");
-}
-
 void setup(void) {
-  // flip screen, if required
-   u8g.setRot180();
-  
-  // set SPI backup if required
-  //u8g.setHardwareBackup(u8g_backup_avr_spi);
-
-  // assign default color value
-  if (u8g.getMode() == U8G_MODE_R3G3B2) {
-    u8g.setColorIndex(255);     // white
-  } else if (u8g.getMode() == U8G_MODE_GRAY2BIT) {
-    u8g.setColorIndex(3); // max intensity
-  }
-  else if (u8g.getMode() == U8G_MODE_BW) {
-    u8g.setColorIndex(1); // pixel on
-  }
-  else if (u8g.getMode() == U8G_MODE_HICOLOR) {
-    u8g.setHiColorByRGB(255,255,255);
-  }
-  
-  pinMode(8, OUTPUT);
+  u8g.setRot180(); // flip screen
+  u8g.setFont(u8g_font_unifont); // 16 x 16
 }
 
 void loop(void) {
-  // picture loop
   u8g.firstPage();  
   do {
     draw();
-  } while( u8g.nextPage() );
-  
-  // rebuild the picture after some delay
-  //delay(50);
+  } while(u8g.nextPage());
+}
+
+void draw(void) {
+
+  // 4 lines x 16 characters (recommended for u8g_font_unifont).
+  // (0, 12) is the lower left corner of the first character
+  u8g.drawStr(0, 12, "Hello, world!");
+  u8g.drawStr(0, 28, "Hello, again!");
+  u8g.drawStr(0, 44, "Hi, yet again!");
+  u8g.drawStr(0, 60, "1234567890123456");  
+
+  // 5 lines x 16 characters.
+//  u8g.drawStr(0, 12, "Hello, world!");
+//  u8g.drawStr(0, 24, "Hello, again!");
+//  u8g.drawStr(0, 36, "Hi, yet again!");
+//  u8g.drawStr(0, 48, "Enough already!");
+//  u8g.drawStr(0, 60, "1234567890123456");
 }
