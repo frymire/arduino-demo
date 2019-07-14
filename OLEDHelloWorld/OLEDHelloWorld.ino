@@ -18,9 +18,30 @@ const int csPin = 6;
 const int dcPin = 7;
 U8GLIB_SH1106_128X64 u8g(clkPin, mosiPin, csPin, dcPin);
 
+// 4 lines is recommended, but 5 also works.
+#define numLines 4
+
+const boolean flipped = false;
+int deltaRow = 16, firstRow = 14;
+
+char* text[] = {
+  "1234567890123456",
+  "Hello, world!",
+  "Hello, again!",
+  "Hi, yet again!",
+  "Enough already!"
+};
+
 void setup(void) {
-  u8g.setRot180(); // flip screen
-  u8g.setFont(u8g_font_unifont); // 16 x 16
+  
+  u8g.setFont(u8g_font_unifont); // 16 x 16  
+  
+  if (flipped) {
+    u8g.setRot180(); // flip screen
+    firstRow = 12; 
+  }
+  
+  if (numLines == 5) { deltaRow = 12; }
 }
 
 void loop(void) {
@@ -30,19 +51,9 @@ void loop(void) {
   } while(u8g.nextPage());
 }
 
-void draw(void) {
-
-  // 4 lines x 16 characters (recommended for u8g_font_unifont).
-  // (0, 12) is the lower left corner of the first character
-  u8g.drawStr(0, 12, "Hello, world!");
-  u8g.drawStr(0, 28, "Hello, again!");
-  u8g.drawStr(0, 44, "Hi, yet again!");
-  u8g.drawStr(0, 60, "1234567890123456");  
-
-  // 5 lines x 16 characters.
-//  u8g.drawStr(0, 12, "Hello, world!");
-//  u8g.drawStr(0, 24, "Hello, again!");
-//  u8g.drawStr(0, 36, "Hi, yet again!");
-//  u8g.drawStr(0, 48, "Enough already!");
-//  u8g.drawStr(0, 60, "1234567890123456");
+void draw(void) {  
+  for (int i = 0; i < numLines; i++) {
+    // The first two parameters specify the lower left corner of the first character.
+    u8g.drawStr(0, firstRow + i*deltaRow, text[i]);
+  }
 }

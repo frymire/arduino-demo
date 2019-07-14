@@ -33,7 +33,7 @@ void loop(void) {
     draw();
   } while(u8g.nextPage());
   
-  // increase the state
+  // Increase the state. We will iterate over 9 demos for 8 counts each.
   draw_state++;
   if (draw_state >= 9*8) draw_state = 0;
   
@@ -135,35 +135,8 @@ void u8g_ascii_2() {
 }
 
 void u8g_extra_page(uint8_t a) {
-//  if (u8g.getMode() == U8G_MODE_HICOLOR || u8g.getMode() == U8G_MODE_R3G3B2) {
-//    
-//    /* draw background (area is 128x128) */
-//    u8g_uint_t r, g, b;
-//    b = a << 5;
-//    for(g = 0; g < 64; g++) {
-//      for(r = 0; r < 64; r++) {
-//        u8g.setRGB(r << 2, g << 2, b);
-//        u8g.drawPixel(g, r);
-//      }
-//    }
-//    u8g.setRGB(255, 255, 255);
-//    u8g.drawStr(66, 0, "Color Page");
-//    
-//  } else if (u8g.getMode() == U8G_MODE_GRAY2BIT) {
-//    u8g.drawStr(66, 0, "Gray Level");
-//    u8g.setColorIndex(1);
-//    u8g.drawBox(0, 4, 64, 32);
-//    u8g.drawBox(70, 20, 4, 12);
-//    u8g.setColorIndex(2);
-//    u8g.drawBox(0 + 1*a, 4 + 1*a, 64 - 2*a, 32 - 2*a);
-//    u8g.drawBox(74, 20, 4, 12);
-//    u8g.setColorIndex(3);
-//    u8g.drawBox(0 + 2*a, 4 + 2*a, 64 - 4*a, 32 - 4*a);
-//    u8g.drawBox(78, 20, 4, 12);
-//  } else {
-    u8g.drawStr(0, 12, "setScale1x1");
-    u8g.setScale2x2();
-    u8g.drawStr(0, 6 + a, "setScale2x2");
-    u8g.undoScale();
-//  }
+  u8g.drawStr(0, 12, "setScale1x1");
+  u8g.setScale2x2();
+  u8g.drawStr(0, 6 + a, "setScale2x2");
+  u8g.undoScale();
 }
