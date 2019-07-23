@@ -1,5 +1,5 @@
 
-// PWM a pin based based on the reading from a potentiometer.
+// Control two magnets based on a switch and a potentiometer reading.
 
 #include <U8glib.h>
 
