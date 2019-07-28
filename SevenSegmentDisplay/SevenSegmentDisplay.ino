@@ -2,8 +2,8 @@
 #include "TimerOne.h"
 #include "TM1637.h"
 
-const int clockPin = 7;
-const int dataIOPin = 6;
+const int clockPin = 2;
+const int dataIOPin = 4;
 TM1637 tm1637(clockPin, dataIOPin);
 
 unsigned char hour = 12;
