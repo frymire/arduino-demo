@@ -1,8 +1,22 @@
 
+#include <U8glib.h>
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_FXAS21002C.h>
 #include <Adafruit_FXOS8700.h>
+
+// OLED display parameters.
+#define numLines 4 // 4 lines is recommended, but 5 also works.
+
+const int clkPin = 8;
+const int mosiPin = 9;
+const int csPin = 6;
+const int dcPin = 7;
+const boolean flipped = false;
+U8GLIB_SH1106_128X64 u8g(clkPin, mosiPin, csPin, dcPin);
+int deltaRow = 16, firstRow = 14;
+String text[] = { "", "", "", "", "" };
+
 
 /* Assign a unique IDs to these sensors at the same time. */
 Adafruit_FXAS21002C gyro = Adafruit_FXAS21002C(0x0021002C);
@@ -25,34 +39,43 @@ void setup(void) {
   }
 
   displaySensorDetails();
+
+  // Set up OLED
+  u8g.setFont(u8g_font_unifont); // 16 x 16
+  if (numLines == 5) { deltaRow = 12; }  
+  if (flipped) {
+    u8g.setRot180(); // flip screen
+    firstRow = 12; 
+  }    
 }
 
 void loop(void) {
-  
+
   sensors_event_t aevent, mevent, gyroEvent;
   accelmag.getEvent(&aevent, &mevent);
   gyro.getEvent(&gyroEvent);
   
-  // Display the accelerometer results.
-  Serial.print("Acceleration (m/s^2) ");
-  Serial.print("X: "); Serial.print(aevent.acceleration.x, 4); Serial.print("  ");
-  Serial.print("Y: "); Serial.print(aevent.acceleration.y, 4); Serial.print("  ");
-  Serial.print("Z: "); Serial.print(aevent.acceleration.z, 4); Serial.print("  ");
+  text[0] = "Accelerometer";
+  text[1] = "X: " + String(aevent.acceleration.x, 4) + " m/s2";
+  text[2] = "Y: " + String(aevent.acceleration.y, 4) + " m/s2";
+  text[3] = "Z: " + String(aevent.acceleration.z, 4) + " m/s2";
   
-  // Display the magnetometer results.
-  Serial.print("Magnetometer (uT) ");
-  Serial.print("X: "); Serial.print(mevent.magnetic.x, 1); Serial.print("  ");
-  Serial.print("Y: "); Serial.print(mevent.magnetic.y, 1); Serial.print("  ");
-  Serial.print("Z: "); Serial.print(mevent.magnetic.z, 1); Serial.print("  ");
+//  text[0] = "Magnetometer";
+//  text[1] = "X: " + String(mevent.magnetic.x, 1) + " uT";
+//  text[2] = "Y: " + String(mevent.magnetic.y, 1) + " uT";
+//  text[3] = "Z: " + String(mevent.magnetic.z, 1) + " uT";
+  
+//  text[0] = "Gyro";
+//  text[1] = "X: " + String(gyroEvent.gyro.x, DEC) + " rad/s";
+//  text[2] = "Y: " + String(gyroEvent.gyro.y, DEC) + " rad/s";
+//  text[3] = "Z: " + String(gyroEvent.gyro.z, DEC) + " rad/s";
 
-  /* Display the results (speed is measured in rad/s) */
-  Serial.print("Gyro (rad/s) ");
-  Serial.print("X: "); Serial.print(gyroEvent.gyro.x); Serial.print(" ");
-  Serial.print("Y: "); Serial.print(gyroEvent.gyro.y); Serial.print(" ");
-  Serial.print("Z: "); Serial.print(gyroEvent.gyro.z); Serial.print(" ");
-
-  Serial.println("");  
-  delay(500);
+  u8g.firstPage();
+  do {
+    draw();
+  } while(u8g.nextPage());
+    
+  delay(50);
 }
 
 void displaySensorDetails(void) {
@@ -89,6 +112,12 @@ void displaySensorDetails(void) {
   Serial.print("Max Value: "); Serial.print(gyroSensor.max_value); Serial.println(" rad/s");
   Serial.print("Resolution: "); Serial.print(gyroSensor.resolution); Serial.println(" rad/s");
   Serial.println("------------------------------------");
-  Serial.println("");
-  delay(5000);  
+}
+
+void draw(void) {
+  char charBuffer[16];
+  for (int i = 0; i < numLines; i++) {
+    text[i].toCharArray(charBuffer, 16);
+    u8g.drawStr(0, firstRow + i*deltaRow, charBuffer);
+  }
 }
