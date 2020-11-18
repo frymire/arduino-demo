@@ -55,15 +55,15 @@ void loop(void) {
   accelmag.getEvent(&aevent, &mevent);
   gyro.getEvent(&gyroEvent);
   
-  text[0] = "Accelerometer";
-  text[1] = "X: " + String(aevent.acceleration.x, 4) + " m/s2";
-  text[2] = "Y: " + String(aevent.acceleration.y, 4) + " m/s2";
-  text[3] = "Z: " + String(aevent.acceleration.z, 4) + " m/s2";
+//  text[0] = "Accelerometer";
+//  text[1] = "X: " + String(aevent.acceleration.x, 4) + " m/s2";
+//  text[2] = "Y: " + String(aevent.acceleration.y, 4) + " m/s2";
+//  text[3] = "Z: " + String(aevent.acceleration.z, 4) + " m/s2";
   
-//  text[0] = "Magnetometer";
-//  text[1] = "X: " + String(mevent.magnetic.x, 1) + " uT";
-//  text[2] = "Y: " + String(mevent.magnetic.y, 1) + " uT";
-//  text[3] = "Z: " + String(mevent.magnetic.z, 1) + " uT";
+  text[0] = "Magnetometer";
+  text[1] = "X: " + String(mevent.magnetic.x, 1) + " uT";
+  text[2] = "Y: " + String(mevent.magnetic.y, 1) + " uT";
+  text[3] = "Z: " + String(mevent.magnetic.z, 1) + " uT";
   
 //  text[0] = "Gyro";
 //  text[1] = "X: " + String(gyroEvent.gyro.x, DEC) + " rad/s";
