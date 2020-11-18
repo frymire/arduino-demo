@@ -1,4 +1,10 @@
 
+/*
+ * Demo MLX90393 magnetometer with results displayed on OLED.
+ * 
+ * See https://learn.adafruit.com/mlx90393-wide-range-3-axis-magnetometer/overview
+ */
+ 
 #include <U8glib.h>
 #include <Wire.h>
 #include "Adafruit_MLX90393.h"
@@ -18,7 +24,7 @@ Adafruit_MLX90393 magnetometer = Adafruit_MLX90393();
 
 void setup(void) {
 
-  magnetometer.begin();
+  magnetometer.begin(); 
 
   // Set up OLED
   u8g.setFont(u8g_font_unifont); // 16 x 16
@@ -46,7 +52,7 @@ void loop(void) {
     draw();
   } while(u8g.nextPage());
     
-  delay(20);
+  delay(5);
 }
 
 void draw(void) {
