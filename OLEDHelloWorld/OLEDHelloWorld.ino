@@ -25,7 +25,7 @@ const boolean flipped = false;
 int deltaRow = 16, firstRow = 14;
 
 char* text[] = {
-  "1234567890123456",
+  "0123456789ABCDEF",
   "Hello, world!",
   "Hello, again!",
   "Hi, yet again!",
