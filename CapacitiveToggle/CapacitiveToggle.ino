@@ -48,7 +48,7 @@ void setup(void) {
   }
 
   // Set pin 2 to receive the result of the switch.
-  pinMode(2, INPUT);
+  pinMode(kDigitalPin, INPUT);
 }
  
 void loop(void) {
