@@ -5,13 +5,12 @@
  *  On the side with 3 pins, connect the left to D2, the middle to ground, and the right to D3.
  *  The side with 2 pins is for the push-in switch. Connect one to ground and the other to D4.
  *  
- *  Adapted from example [here](https://playground.arduino.cc/Main/RotaryEncoders/) with title, 
+ *  Adapted from example in https://playground.arduino.cc/Main/RotaryEncoders/ with title, 
  *  "Another Interrupt Library THAT REALLY WORKS".
  *  Bourns PEC11: https://www.adafruit.com/product/377 
  */
 
-// Usually, the rotary encoders three pins have the ground pin in the middle.
-// On Arduino Uno and Nano boards, pins 2 and 3 support interrupts.
+// Pins 2 and 3 support interrupts on Arduino Uno and Nano boards.
 enum PinAssignments {
   pinA = 2, 
   pinB = 3, 
@@ -19,10 +18,10 @@ enum PinAssignments {
 };
 
 volatile int clicks = 0; // dial counter 
-int lastReportedClicks = 0; // change detection
+int lastReportedClicks = 0; // to detect changes
 static boolean debouncing = false;
 
-// interrupt service routine vars
+// ISR variables
 boolean A_set = false;
 boolean B_set = false;
 
@@ -37,11 +36,15 @@ void setup() {
 }
 
 void loop() {
+  
   debouncing = true; // reset the debouncer
+
+  // TODO: Good performance seems to depend on having this print statement. It may be doing the debouncing.
   if (lastReportedClicks != clicks) {
     Serial.println("Clicks: " + String(clicks, DEC));
     lastReportedClicks = clicks;
   }
+  
   if (digitalRead(clearButton) == LOW) clicks = 0;
 }
 
