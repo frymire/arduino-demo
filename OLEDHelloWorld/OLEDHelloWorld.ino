@@ -3,25 +3,25 @@
  * 
  * Gnd -> Gnd
  * Vcc -> 5V 
- * CLK -> D8
- * MOSI -> D9
+ * CLK -> D7
+ * MOSI -> D6
  * Res -> Reset
- * CS -> D6
- * DC -> D7
+ * CS -> D10
+ * DC -> D9
  */
 
 #include "U8glib.h"
 
-const int clkPin = 8;
-const int mosiPin = 9;
-const int csPin = 6;
-const int dcPin = 7;
+const int clkPin = 7;
+const int mosiPin = 6;
+const int csPin = 10;
+const int dcPin = 9;
 U8GLIB_SH1106_128X64 u8g(clkPin, mosiPin, csPin, dcPin);
 
 // 4 lines is recommended, but 5 also works.
 #define numLines 4
 
-const boolean flipped = false;
+const boolean flipped = true;
 int deltaRow = 16, firstRow = 14;
 
 char* text[] = {
@@ -31,6 +31,14 @@ char* text[] = {
   "Hi, yet again!",
   "Enough already!"
 };
+
+//char* text[] = {
+//  "Please...",
+//  "   don't touch!",
+//  "Por favor...",
+//  "   no tocar!",
+//  ""
+//};
 
 void setup(void) {
   
