@@ -24,7 +24,7 @@ U8GLIB_SH1106_128X64 u8g(clkPin, mosiPin, csPin, dcPin);
 const boolean flipped = true;
 int deltaRow = 16, firstRow = 14;
 
-char* text[] = {
+char const* text[] = {
   "0123456789ABCDEF",
   "Hello, world!",
   "Hello, again!",
@@ -32,7 +32,7 @@ char* text[] = {
   "Enough already!"
 };
 
-//char* text[] = {
+//char const* text[] = {
 //  "Please...",
 //  "   don't touch!",
 //  "Por favor...",
